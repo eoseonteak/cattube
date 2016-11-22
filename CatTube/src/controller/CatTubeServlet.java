@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import controller.action.Action;
 
-@WebServlet(urlPatterns="/CatTubeServlet")
+@WebServlet("/CatTubeServlet")
 public class CatTubeServlet extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
@@ -18,6 +18,7 @@ public class CatTubeServlet extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String command = request.getParameter("command");
+		System.out.println("CatTubeServlet에서 요청 받음을 확인 :"+command);
 		
 		ActionFactory af = ActionFactory.getInstance();
 		Action action = af.getAction(command);
