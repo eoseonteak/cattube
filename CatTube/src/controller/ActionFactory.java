@@ -2,6 +2,7 @@ package controller;
 
 import controller.action.Action;
 import controller.action.BoardListAction;
+import controller.action.BoardReadAction;
 
 public class ActionFactory {
 	private ActionFactory() {}
@@ -15,6 +16,8 @@ public class ActionFactory {
 		
 		if(command.equals("board_list") || command.equals("")){
 			action = new BoardListAction();
+		}else if(command.equals("board_read")){
+			action = new BoardReadAction();
 		}
 		
 		return action;

@@ -1,27 +1,31 @@
 <%@ page contentType="text/html; charset=euc-kr" %>
+<!doctype html>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <html lang="en" class="no-js">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-  
-  	<link rel="icon" href="img/favicon.ico" type="image/x-icon">
+
+	<link rel="icon" href="img/favicon.ico" type="image/x-icon">
 	<link rel="stylesheet" href="css/reset.css"> <!-- CSS reset -->
 	<link rel="stylesheet" href="css/style.css"> <!-- Resource style -->
 	<script src="js/modernizr.js"></script> <!-- Modernizr -->
-    
-	<script type="text/javascript">
-	function test_key(){
-		alert(document.getElementByName('search').value);
-		if(frm.getElementByName('search').value=''){
-			alert("asd");
+	<script>
+		function test_key(){
+			var data = document.getElementById("search");
+			if(data.value==''){
+				alert("검색어를 입력하세요.");
+			}
 		}
-	}
 	</script>
-	
-<title>Responsive Sidebar Navigation | CodyHouse</title>
+    
+	<title>SearchList.jsp</title>
 </head>
+<style>
+	body{
+		font-size:1.4em;
+	}
+</style>
 <body>
 	<header class="cd-main-header">
 		<a href="http://localhost:8082/CatTube/CatTubeServlet?command=board_list" class="cd-logo">
@@ -34,11 +38,11 @@
 				<input type="text" list="keywords" autocomplete="on" name="search" placeholder="Search..."
 				onkeydown="javascript:if(event.keyCode==13){test_key();}">
 				
-				<%-- <datalist id="keywords">
+				<datalist id="keywords">
 				<c:forEach items="${boardList.articleList}" var="article">
 					<option value="${article.title}">
 				</c:forEach>
-				</datalist> --%>
+				</datalist>
 			</form>
 		</div> <!-- cd-search -->
 
@@ -79,7 +83,6 @@
 					</ul> -->
 				</li>
 				
-				
 				<li class="has-children users">
 					<a href="#0">내채널</a>
 					<!-- <ul>
@@ -105,6 +108,7 @@
 				
 				<li class="has-children notifications active">
 					<a href="#0">구독<span class="count">+ 999</span></a>
+					
 					<!-- <ul>
 						<li><a href="#0">구독1</a></li>
 						<li><a href="#0">구독2</a></li>
@@ -129,7 +133,7 @@
 						<li><a href="#0">Edit Image</a></li>
 					</ul>
 				</li> -->
-				
+
 				<!-- <li class="has-children users">
 					<a href="#0">Users</a>
 					
@@ -140,49 +144,121 @@
 					</ul>
 				</li> -->
 			</ul>
-			
+
 			<!-- <ul>
 				<li class="cd-label">Action</li>
 				<li class="action-btn"><a href="#0">+ Button</a></li>
 			</ul> -->
 		</nav>
-		<div style="width:100%; line-height:40px; background-color: #FFFFFF">
-			<a>홈</a>
-			<a>인기</a>
+		
+		<div class="content-wrapper" style="background-color: #EAEAEA">
+		<div style="width:70%; height:auto; float: left; background-color: #EAEAEA">
+			<div style="margin-top:15px;">
+				<iframe src="${bvo.videoPath}" height="360" width="100%">
+				</iframe>
+			</div>
+			
+			<div style="width: 100%; height: auto; margin-top:15px; padding: 15px; background-color: #FFFFFF">
+				<table>
+					<tr style="padding:10px;">
+						<td colspan="8">${bvo.title}</td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+					</tr>
+					<tr>
+						<td rowspan="2">
+							<img src="img/user.png" style="width: 48px; height: 48px;">
+						</td>
+						<td valign="middle">ID12345677</td>
+					</tr>
+					<tr>
+						<td><img src="img/subscribe.png" style="vertical-align:middle;"></td>
+						<td>1,223</td>
+						<td style="width: 200px" align="right">조회수 ${bvo.readCount}회</td>
+					</tr>
+					<tr>
+						<td colspan="9">
+							<hr width=100%>
+						</td>
+					</tr>
+					<tr>
+						<td><img src="img/add.png" style="vertical-align:middle;">&nbsp;추가&nbsp;</td>
+						<td align="center"><img src="img/next.png" style="vertical-align:middle;">&nbsp;공유</td>
+						<td><img src="img/more.png" style="vertical-align:middle;">&nbsp;더보기</td>
+						<td style="width: 400px" align="right">
+							<img src="img/thumb-up.png">9,999 &nbsp;
+							<img src="img/thumb-down.png">1,234
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div style="width: 100%; height: auto; padding: 15px; margin-top: 15px; background-color: #FFFFFF">
+				<table>
+					<tr>
+						<td>게시일:2016.11.14</td>
+					</tr>
+					<tr>
+						<td>${bvo.content}</td>
+					</tr>
+				</table>
+				<br>
+				<table>
+					<tr>
+						<td width="100px">카테고리</td>
+						<td>동물</td>
+					</tr>
+					<tr>
+						<td>라이센스</td>
+						<td>표준 CatTube 라이센스</td>
+					</tr>
+				</table>
+			</div>
+
+			<div style="width: 100%; height: auto; padding: 15px; margin-top: 15px; background-color: #FFFFFF">
+				댓글 96개
+				<pre>
+				1
+				2
+				3
+				4
+				</pre>
+			</div>
 		</div>
-		
-		<div class="content-wrapper" align="center"  style="background-color: #EAEAEA">
-			
-		
-		
-			<table border="1">
-			<c:forEach var="board" items="${boardList}">
-			<tr>
-				<td>
-				<a href="CatTubeServlet?command=board_read&num=${board.num }">
-				<img src="${board.imagePath}" 
-				alt="cat 00 image" width="128" height="128">
-				</a>
-				</td>
-			</tr>
-			<tr>
-				<td>${board.title}</td>
-			</tr>
-			<tr>
-				<td colspan="2">${board.writer}</td>
-			</tr>
-				<td>조회수 ${board.readCount} 회</td>
-				<td>&nbsp;&nbsp;&nbsp;&nbsp;
-					${board.writeDate}</td>
-			</c:forEach>
+
+		<!--리스트  -->		
+		<div
+			style="height: auto; display:inline-block; margin-left:15px; margin-top:15px; background-color: #FFFFFF">
+			<table>
+				<tr>
+					<td><iframe src="http://www.youtube.com/embed/bEknnqRsLYI"
+							height="200" width="200"></iframe> <br>올린사람<br> 조회수
+						9999회<br></td>
+				</tr>
+				<tr>
+					<td><iframe src="http://www.youtube.com/embed/bEknnqRsLYI"
+							height="200" width="200"></iframe> <br>올린사람<br> 조회수
+						9999회<br></td>
+				</tr>
+				<tr>
+					<td><iframe src="http://www.youtube.com/embed/bEknnqRsLYI"
+							height="200" width="200"></iframe> <br>올린사람<br> 조회수
+						9999회<br></td>
+				</tr>
+				<tr>
+					<td><iframe src="http://www.youtube.com/embed/bEknnqRsLYI"
+							height="200" width="200"></iframe> <br>올린사람<br> 조회수
+						9999회<br></td>
+				</tr>
+				<tr>
+					<td><iframe src="http://www.youtube.com/embed/bEknnqRsLYI"
+							height="200" width="200"></iframe> <br>올린사람<br> 조회수
+						9999회<br></td>
+				</tr>
 			</table>
-		</div> <!-- .content-wrapper -->
+		</div>
+	</div> <!-- .content-wrapper -->
 			</main> <!-- .cd-main-content -->
-			
-			<!---------------------- footer ---------------------->
-			<%-- <div id="footer" style="height:50px;clear:both;">
-				<jsp:include page="footer.jsp"/>  
-			</div> --%>
 <script src="js/jquery-2.1.4.js"></script>
 <script src="js/jquery.menu-aim.js"></script>
 <script src="js/main.js"></script> <!-- Resource jQuery -->

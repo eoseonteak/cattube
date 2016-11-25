@@ -62,71 +62,108 @@ public class BoardDAO {
 	}	
 
 
-	public List<BoardVO> selectData(String data){
+//	public List<BoardVO> selectData(String data){
+//
+//		String sql = "SELECT * FROM ARTICLE_BOARD WHERE TITLE LIKE '%"+data+"%' ORDER BY ARTICLE_ID DESC";
+//
+//		Connection conn = null;
+//		PreparedStatement pstmt = null;
+//		ResultSet rs = null;
+//		List<BoardVO> list = new ArrayList<BoardVO>();
+//
+//		try {
+//			conn = DBHelper.makeConnection();
+//			pstmt = conn.prepareStatement(sql);
+//
+//			//pstmt.setString(1, data);
+//			rs = pstmt.executeQuery();
+//			while(rs.next()){
+//				BoardVO bvo = new BoardVO();
+//
+//				bvo.setNum(rs.getInt("num"));
+//				bvo.setTitle(rs.getString("title"));
+//				bvo.setContent(rs.getString("content"));
+//				bvo.setWriter(rs.getString("writer"));
+//				bvo.setWriteDate(rs.getTimestamp("writedate"));
+//				bvo.setReadCount(rs.getInt("readcount"));
+//				bvo.setVoteCount(rs.getInt("votecount"));
+//				bvo.setVideoPath(rs.getString("videopath"));
+//				bvo.setImagePath(rs.getString("imagepath"));
+//				bvo.setClosed(rs.getString("closed"));
+//
+//				list.add(bvo);
+//			}
+//		} catch (Exception e) {
+//			System.out.println("selectData error");
+//			e.printStackTrace();
+//		} finally {
+//			DBHelper.close(conn);
+//			DBHelper.close(pstmt);
+//			DBHelper.close(rs);
+//		}
+//		return list;
+//	}
 
-		String sql = "SELECT * FROM ARTICLE_BOARD WHERE TITLE LIKE '%"+data+"%' ORDER BY ARTICLE_ID DESC";
-
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		List<BoardVO> list = new ArrayList<BoardVO>();
-
-		try {
-			conn = DBHelper.makeConnection();
-			pstmt = conn.prepareStatement(sql);
-
-			//pstmt.setString(1, data);
-			rs = pstmt.executeQuery();
-			while(rs.next()){
-				BoardVO bvo = new BoardVO();
-
-				bvo.setNum(rs.getInt("num"));
-				bvo.setTitle(rs.getString("title"));
-				bvo.setContent(rs.getString("content"));
-				bvo.setWriter(rs.getString("writer"));
-				bvo.setWriteDate(rs.getTimestamp("writedate"));
-				bvo.setReadCount(rs.getInt("readcount"));
-				bvo.setVoteCount(rs.getInt("votecount"));
-				bvo.setVideoPath(rs.getString("videopath"));
-				bvo.setImagePath(rs.getString("imagepath"));
-				bvo.setClosed(rs.getString("closed"));
-
-				list.add(bvo);
-			}
-		} catch (Exception e) {
-			System.out.println("selectData error");
-			e.printStackTrace();
-		} finally {
-			DBHelper.close(conn);
-			DBHelper.close(pstmt);
-			DBHelper.close(rs);
-		}
-		return list;
-	}
-
-	public int selectArticleCount(){
-		Connection con = null;
-		Statement stmt = null;
-		ResultSet rs = null;
-		int articleCount = 0;
-
-		try {
-			con = DBHelper.makeConnection();
-			String sql = "SELECT COUNT(*) FROM ARTICLE_BOARD";
-			stmt = con.createStatement();
-			rs = stmt.executeQuery(sql);
-
-			rs.next();
-			articleCount = rs.getInt(1);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return articleCount;
-	}
+	public BoardVO selectNum(int num){
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        BoardVO bvo = null;
+         
+        try {
+            con = DBHelper.makeConnection();
+            String sql = 
+                "SELECT * FROM CATTUBE_BOARD WHERE NUM=?";
+            pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1, num);
+             
+            rs = pstmt.executeQuery();
+            if(rs.next()){
+                bvo = new BoardVO();
+                bvo.setNum(rs.getInt(1));
+                bvo.setTitle(rs.getString(2));
+                bvo.setContent(rs.getString(3));
+                bvo.setWriter(rs.getString(4));
+                bvo.setWriteDate(rs.getTimestamp(5));
+                bvo.setReadCount(rs.getInt(6));
+                bvo.setVoteCount(rs.getInt(7));
+				bvo.setVideoPath(rs.getString(8));
+				bvo.setImagePath(rs.getString(9));
+				bvo.setClosed(rs.getString(10));
+            }
+        } catch (SQLException e) {
+            System.out.println("selectNum 에러");
+            e.printStackTrace();
+        } finally{
+            DBHelper.close(rs);
+            DBHelper.close(pstmt);
+            DBHelper.close(con);
+        }
+        return bvo;
+    }
+//	public int selectArticleCount(){
+//		Connection con = null;
+//		Statement stmt = null;
+//		ResultSet rs = null;
+//		int articleCount = 0;
+//
+//		try {
+//			con = DBHelper.makeConnection();
+//			String sql = "SELECT COUNT(*) FROM ARTICLE_BOARD";
+//			stmt = con.createStatement();
+//			rs = stmt.executeQuery(sql);
+//
+//			rs.next();
+//			articleCount = rs.getInt(1);
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		return articleCount;
+//	}
 
 	
 	public int updateReadCount(int articleId){
-		String sql = "UPDATE ARTICLE_BOARD SET READ_COUNT = READ_COUNT+1 WHERE ARTICLE_ID=?";
+		String sql = "UPDATE CATTUBE_BOARD SET READCOUNT = READCOUNT+1 WHERE NUM=?";
 
 		Connection conn = null;
 		PreparedStatement pstmt = null;

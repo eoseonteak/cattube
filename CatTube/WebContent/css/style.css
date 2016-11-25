@@ -571,7 +571,7 @@ Sidebar
     padding: 0.6em 0;
   }
   .cd-side-nav > ul > li:not(.action-btn):hover > a {
-    background-color: #33383e;
+    background-color: #ff0000;
   }
   .cd-side-nav > ul > li > a {
     padding: 1em 1em 1em 42px;
