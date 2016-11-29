@@ -185,13 +185,13 @@
 						<td>${board.writer}<br></td>
 					</tr>
 					<tr>
-						<td>조회수 ${board.readCount} 회<br></td>
+						<td style="font-size:9px; color:gray;">조회수 ${board.readCount} 회<br></td>
 					</tr>
 					<tr>
-						<td>${board.writeDate}</td>
+						<td style="font-size:9px; color:gray;">${board.writeDate}</td>
 					</tr>
 					<tr>
-						<td id="content" width="450">${board.content}</td>
+						<td id="content" width="450" style="font-size:9px; color:gray;">${board.content}</td>
 					</tr>
 					<tr>
 						<td>&nbsp;</td>
