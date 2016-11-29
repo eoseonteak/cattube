@@ -682,7 +682,7 @@ Sidebar
   }
   .cd-top-nav .has-children {
     position: relative;
-    background-color: #2c3136;
+    background-color: #ffffff;
   }
   .cd-top-nav .has-children > a {
     height: 100%;
@@ -694,7 +694,7 @@ Sidebar
     right: 1.8em;
   }
   .cd-top-nav .has-children ul {
-    background-color: #1c1f22;
+    background-color: #ffffff;
     width: 200px;
     top: 100%;
     right: 0;

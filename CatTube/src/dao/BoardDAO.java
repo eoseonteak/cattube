@@ -61,48 +61,47 @@ public class BoardDAO {
 		return list;
 	}	
 
+	public List<BoardVO> selectData(String data){
 
-//	public List<BoardVO> selectData(String data){
-//
-//		String sql = "SELECT * FROM ARTICLE_BOARD WHERE TITLE LIKE '%"+data+"%' ORDER BY ARTICLE_ID DESC";
-//
-//		Connection conn = null;
-//		PreparedStatement pstmt = null;
-//		ResultSet rs = null;
-//		List<BoardVO> list = new ArrayList<BoardVO>();
-//
-//		try {
-//			conn = DBHelper.makeConnection();
-//			pstmt = conn.prepareStatement(sql);
-//
-//			//pstmt.setString(1, data);
-//			rs = pstmt.executeQuery();
-//			while(rs.next()){
-//				BoardVO bvo = new BoardVO();
-//
-//				bvo.setNum(rs.getInt("num"));
-//				bvo.setTitle(rs.getString("title"));
-//				bvo.setContent(rs.getString("content"));
-//				bvo.setWriter(rs.getString("writer"));
-//				bvo.setWriteDate(rs.getTimestamp("writedate"));
-//				bvo.setReadCount(rs.getInt("readcount"));
-//				bvo.setVoteCount(rs.getInt("votecount"));
-//				bvo.setVideoPath(rs.getString("videopath"));
-//				bvo.setImagePath(rs.getString("imagepath"));
-//				bvo.setClosed(rs.getString("closed"));
-//
-//				list.add(bvo);
-//			}
-//		} catch (Exception e) {
-//			System.out.println("selectData error");
-//			e.printStackTrace();
-//		} finally {
-//			DBHelper.close(conn);
-//			DBHelper.close(pstmt);
-//			DBHelper.close(rs);
-//		}
-//		return list;
-//	}
+		String sql = "SELECT * FROM CATTUBE_BOARD WHERE TITLE LIKE '%"+data+"%' ORDER BY NUM DESC";
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<BoardVO> list = new ArrayList<BoardVO>();
+
+		try {
+			conn = DBHelper.makeConnection();
+			pstmt = conn.prepareStatement(sql);
+
+			//pstmt.setString(1, data);
+			rs = pstmt.executeQuery();
+			while(rs.next()){
+				BoardVO bvo = new BoardVO();
+
+				bvo.setNum(rs.getInt("num"));
+				bvo.setTitle(rs.getString("title"));
+				bvo.setContent(rs.getString("content"));
+				bvo.setWriter(rs.getString("writer"));
+				bvo.setWriteDate(rs.getTimestamp("writedate"));
+				bvo.setReadCount(rs.getInt("readcount"));
+				bvo.setVoteCount(rs.getInt("votecount"));
+				bvo.setVideoPath(rs.getString("videopath"));
+				bvo.setImagePath(rs.getString("imagepath"));
+				bvo.setClosed(rs.getString("closed"));
+
+				list.add(bvo);
+			}
+		} catch (Exception e) {
+			System.out.println("selectData error");
+			e.printStackTrace();
+		} finally {
+			DBHelper.close(conn);
+			DBHelper.close(pstmt);
+			DBHelper.close(rs);
+		}
+		return list;
+	}
 
 	public BoardVO selectNum(int num){
         Connection con = null;

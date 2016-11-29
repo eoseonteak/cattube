@@ -1,27 +1,37 @@
 <%@ page contentType="text/html; charset=euc-kr" %>
+<!doctype html>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <html lang="en" class="no-js">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-  
-  	<link rel="icon" href="img/favicon.ico" type="image/x-icon">
+
+	<link rel="icon" href="img/favicon.ico" type="image/x-icon">
 	<link rel="stylesheet" href="css/reset.css"> <!-- CSS reset -->
 	<link rel="stylesheet" href="css/style.css"> <!-- Resource style -->
 	<script src="js/modernizr.js"></script> <!-- Modernizr -->
 	<script src="js/jquery-3.1.1.min.js"></script>
-    
-	<script type="text/javascript">
-	function test_key(){
-		alert(document.getElementByName('search').value);
-		if(frm.getElementByName('search').value=''){
-			alert("asd");
-		}
-	}
-	</script>
 	
-<title>CatTube</title>
+	<script type="text/javascript">
+		function test_key(){
+			var data = document.getElementById("search");
+			if(data.value==''){
+				alert("검색어를 입력하세요.");
+			}
+		}
+		
+		$(function(){
+			$(document).on('click','#content',function(){
+				if($('#content').text().length>5){
+					var str = $(this).text().substring(0,5);
+					$(this).text(str+"...");
+				}
+			})
+		})
+		
+	</script>
+    
+	<title>CatTube</title>
 </head>
 <body>
 	<header class="cd-main-header">
@@ -36,7 +46,7 @@
 				onkeydown="javascript:if(event.keyCode==13){test_key();}">
 				
 				<%-- <datalist id="keywords">
-				<c:forEach items="${boardList.articleList}" var="article">
+				<c:forEach items="${searchList}" var="article">
 					<option value="${article.title}">
 				</c:forEach>
 				</datalist> --%>
@@ -66,14 +76,14 @@
 			<ul>
 				<li class="cd-label">Main</li>
 				<li class="has-children overview">
-					<a href="CatTubeServlet?command=board_list">홈</a>
+					<a href="http://localhost:8082/CatTube/CatTubeServlet?command=board_list">홈</a>
+					
 					<!-- <ul>
 						<li><a href="#0">All Data</a></li>
 						<li><a href="#0">Category 1</a></li>
 						<li><a href="#0">Category 2</a></li>
 					</ul> -->
 				</li>
-				
 				
 				<li class="has-children users">
 					<c:if test="${not empty sessionScope.loginId }">
@@ -83,6 +93,7 @@
 					<c:if test="${empty sessionScope.loginId }">
 						<a href="CatTubeServlet?command=login_form">내 채널</a>
 					</c:if>
+					
 					<!-- <ul>
 						<li><a href="#0">All Comments</a></li>
 						<li><a href="#0">Edit Comment</a></li>
@@ -92,6 +103,7 @@
 				
 				<li class="has-children comments">
 					<a href="#0">인기</a>
+					
 					<!-- <ul>
 						<li><a href="#0">All Comments</a></li>
 						<li><a href="#0">Edit Comment</a></li>
@@ -106,6 +118,7 @@
 				
 				<li class="has-children notifications active">
 					<a href="#0">구독<span class="count">+ 999</span></a>
+					
 					<!-- <ul>
 						<li><a href="#0">구독1</a></li>
 						<li><a href="#0">구독2</a></li>
@@ -121,8 +134,8 @@
 						<li><a href="#0">Edit Bookmark</a></li>
 						<li><a href="#0">Import Bookmark</a></li>
 					</ul>
-				</li>
-				<li class="has-children images">
+				</li> -->
+				<!-- <li class="has-children images">
 					<a href="#0">Images</a>
 					
 					<ul>
@@ -130,7 +143,7 @@
 						<li><a href="#0">Edit Image</a></li>
 					</ul>
 				</li> -->
-				
+
 				<!-- <li class="has-children users">
 					<a href="#0">Users</a>
 					
@@ -141,7 +154,7 @@
 					</ul>
 				</li> -->
 			</ul>
-			
+
 			<!-- <ul>
 				<li class="cd-label">Action</li>
 				<li class="action-btn"><a href="#0">+ Button</a></li>
@@ -149,20 +162,25 @@
 		</nav>
 		
 		<div class="content-wrapper" align="center"  style="background-color: #EAEAEA">
-			<div style="width:100%; line-height:40px; background-color: #FFFFFF">
-				<a href="CatTubeServlet?command=board_list">홈</a>
-				&nbsp;&nbsp;&nbsp;&nbsp;
-				<a>인기</a>
-			</div>			
+		<div style="width:80%; line-height:40px; background-color: #FFFFFF">
+			<c:if test="${not empty sessionScope.loginId }">
+				${sessionScope.loginId } 님<br>
+			</c:if>	
+		</div>
+		&nbsp;
+		<div style="width:80%; padding-top:15px; padding-bottom:15px; background-color: #FFFFFF">
+			<h3 style="display:inline; margin-left:15px; float:left;">업로드한 동영상</h3>
 			<br><br>
-			<div style="padding-top:15px; background-color: #FFFFFF">
-				<c:forEach var="board" items="${boardList}">
-				<table style="float:center; display:inline;">
+			
+			<c:forEach var="board" items="${boardList}">
+			<c:choose>
+				<c:when test="${sessionScope.loginId eq board.writer}">
+				<table style="display:inline;">
 				<tr>
 					<td colspan="2">
 					<a href="CatTubeServlet?command=board_read&num=${board.num}">
 					<img src="${board.imagePath}" 
-					alt="cat 00 image" width="200" height="128"></a>
+					alt="cat 00 image" width="200" height="110"></a>
 					</td>
 				</tr>
 				<tr>
@@ -172,9 +190,6 @@
 					</td>
 				</tr>
 				<tr>
-					<td colspan="2">${board.writer}</td>
-				</tr>
-				<tr>
 					<td>조회수 ${board.readCount} 회&nbsp;&nbsp;&nbsp;&nbsp;</td>
 					<td>${board.writeDate}</td>
 				</tr>
@@ -182,15 +197,12 @@
 					<td>&nbsp;</td>
 				</tr>
 				</table>
-				</c:forEach>
-			</div>
-		</div> <!-- .content-wrapper -->
+				</c:when>
+			</c:choose>
+			</c:forEach>
+		</div>
+	</div> <!-- .content-wrapper -->
 			</main> <!-- .cd-main-content -->
-			
-			<!---------------------- footer ---------------------->
-			<%-- <div id="footer" style="height:50px;clear:both;">
-				<jsp:include page="footer.jsp"/>  
-			</div> --%>
 <script src="js/jquery-2.1.4.js"></script>
 <script src="js/jquery.menu-aim.js"></script>
 <script src="js/main.js"></script> <!-- Resource jQuery -->
