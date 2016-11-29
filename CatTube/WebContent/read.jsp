@@ -216,7 +216,7 @@
 			<div style="width: 100%; height: auto; padding: 15px; margin-top: 15px; background-color: #FFFFFF">
 				<table>
 					<tr>
-						<td>게시일:2016.11.14</td>
+						<td>게시일 ${bvo.writeDate}</td>
 					</tr>
 					<tr>
 						<td>${bvo.content}</td>
@@ -226,22 +226,24 @@
 				<br>
 			</div>
 
+
 			<div style="width: 100%; height: auto; padding: 15px; margin-top: 15px; background-color: #FFFFFF">
 				<form name="form1" action="CatTubeServlet" method="post">
 					<input type="hidden" name="command" value="board_reply"/>
 					<input type="hidden" name="articleNum" value="<c:out value="${bvo.num}"/>">
 					작성자 : <input type="text" name="writer" value="<c:out value="${sessionScope.loginId }"/>"
 							style="border:0;" readonly><br>
-					<textarea name="rememo" rows="3" cols="30" maxlength="500" placeholder="댓글 입력"></textarea>
+					<textarea name="rememo" rows="4" cols="50" maxlength="100" placeholder="댓글 입력"></textarea>
 					<input type="submit" value="쓰기">
 				</form>
-			</div>
+			
 			
 			<c:forEach var="reply" items="${replyList}">
 			<c:choose>
 			<c:when test="${bvo.num eq reply.articleNum}">
-				<div id="<c:out value="${reply.reNo }"/>" style="border:1px solid; width:300px;">
+				<div id="<c:out value="${reply.reNo }"/>" style="border:0;">
 					<div id="content<c:out value="${reply.reNo }"/>">
+					<br>
 					<c:out value="${reply.reWriter}"/> <c:out value="${reply.reDate}"/>
 					<c:if test="${sessionScope.loginId eq reply.reWriter}">
 						<a href="#" id="update" onclick="fn_replyUpdate('<c:out value="${reply.reNo}"/>')">수정</a>
@@ -255,8 +257,7 @@
 			</c:when>
 			</c:choose>
 			</c:forEach>
-			
-		
+			</div>
 		</div>
 
 		<!--리스트  -->		

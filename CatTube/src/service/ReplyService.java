@@ -11,6 +11,7 @@ public class ReplyService{
 	
 	public void insertBoardReply(ReplyVO rvo){
 		ReplyDAO dao = ReplyDAO.getInstance();
+		
 		if(rvo.getReNo()==null||"".equals(rvo.getReNo())){
 			dao.insertBoardReply(rvo);
 		}

@@ -175,8 +175,8 @@
 					<td colspan="2">${board.writer}</td>
 				</tr>
 				<tr>
-					<td>조회수 ${board.readCount} 회&nbsp;&nbsp;&nbsp;&nbsp;</td>
-					<td>${board.writeDate}</td>
+					<td style="font-size:9px; color:gray;">조회수 ${board.readCount} 회&nbsp;&nbsp;&nbsp;&nbsp;</td>
+					<td style="font-size:9px; color:gray;">${board.writeDate}</td>
 				</tr>
 				<tr>
 					<td>&nbsp;</td>

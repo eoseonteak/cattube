@@ -31,7 +31,7 @@ public class ReplyDAO {
 			pstmt.setString(1, rvo.getArticleNum());
 			pstmt.setString(2, rvo.getReWriter());
 			pstmt.setString(3, rvo.getReMemo());
-			
+
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();

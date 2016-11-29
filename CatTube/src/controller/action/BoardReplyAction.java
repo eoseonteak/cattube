@@ -15,11 +15,11 @@ public class BoardReplyAction implements Action{
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String url="read.jsp";
-		
 		String articleNum = request.getParameter("articleNum");
 		String writer = request.getParameter("writer");
 		String memo = request.getParameter("rememo");
+		
+		String url = "CatTubeServlet?command=board_read&num="+articleNum;
 		
 		ReplyVO rvo = new ReplyVO();
 		rvo.setArticleNum(articleNum);
@@ -29,8 +29,9 @@ public class BoardReplyAction implements Action{
 		ReplyService service = ReplyService.getInstance();
 		service.insertBoardReply(rvo);
 	
+		//new BoardReadAction().execute(request, response);
+		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);
-		//new BoardReadAction().execute(request, response);
 	}
 }
