@@ -59,7 +59,49 @@ public class BoardDAO {
 			DBHelper.close(rs);
 		}
 		return list;
-	}	
+	}
+	
+	public List<BoardVO> selectPopularList(){
+		List<BoardVO> list = new ArrayList<BoardVO>();
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			String sql = "SELECT * FROM CATTUBE_BOARD ORDER BY READCOUNT DESC";
+			
+			conn = DBHelper.makeConnection();
+			pstmt = conn.prepareStatement(sql);
+						
+			rs = pstmt.executeQuery();
+			while(rs.next()){
+				BoardVO bvo = new BoardVO();
+
+				bvo.setNum(rs.getInt("num"));
+				bvo.setTitle(rs.getString("title"));
+				bvo.setContent(rs.getString("content"));
+				bvo.setWriter(rs.getString("writer"));
+				bvo.setWriteDate(rs.getTimestamp("writedate"));
+				bvo.setReadCount(rs.getInt("readcount"));
+				bvo.setVoteCount(rs.getInt("votecount"));
+				bvo.setVideoPath(rs.getString("videopath"));
+				bvo.setImagePath(rs.getString("imagepath"));
+				bvo.setClosed(rs.getString("closed"));
+
+				list.add(bvo);
+			}
+			
+		} catch (Exception e) {
+			System.out.println("selectAll error");
+			e.printStackTrace();
+		} finally {
+			DBHelper.close(conn);
+			DBHelper.close(pstmt);
+			DBHelper.close(rs);
+		}
+		return list;
+	}
+	
 
 	public List<BoardVO> selectData(String data){
 

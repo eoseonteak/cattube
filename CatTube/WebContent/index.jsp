@@ -19,11 +19,13 @@
 			alert("asd");
 		}
 	}
+	
+	
 	</script>
 	
 <title>CatTube</title>
 </head>
-<body>
+<body onscroll="SetDivPosition()">
 	<header class="cd-main-header">
 		<a href="CatTubeServlet?command=board_list" class="cd-logo">
 		<img src="img/cat_2.gif" width="123" height="30">
@@ -47,7 +49,13 @@
 
 		<nav class="cd-nav">
 			<ul class="cd-top-nav">
-				<li><a href="#0">업로드</a></li>
+				<c:if test="${empty sessionScope.loginId }">
+				<li><a href="CatTubeServlet?command=login_form">업로드</a></li>
+				</c:if>
+				<c:if test="${not empty sessionScope.loginId }">
+				<li><a href="CatTubeServlet?command=board_upload">업로드</a></li>
+				</c:if>
+				
 				<li style="margin-right:15px;">
 					<c:if test="${not empty sessionScope.loginId }">
 						<a href="CatTubeServlet?command=member_logout">로그아웃</a>
@@ -66,7 +74,7 @@
 			<ul>
 				<li class="cd-label">Main</li>
 				<li class="has-children overview">
-					<a href="CatTubeServlet?command=board_list">홈</a>
+					<a href="CatTubeServlet?command=board_list" style="text-decoration:none">홈</a>
 					<!-- <ul>
 						<li><a href="#0">All Data</a></li>
 						<li><a href="#0">Category 1</a></li>
@@ -79,9 +87,7 @@
 					<c:if test="${not empty sessionScope.loginId }">
 						<a href="CatTubeServlet?command=my_channel">내 채널</a>
 					</c:if>
-					
 					<c:if test="${empty sessionScope.loginId }">
-						<a href="CatTubeServlet?command=login_form">내 채널</a>
 					</c:if>
 					<!-- <ul>
 						<li><a href="#0">All Comments</a></li>
@@ -91,7 +97,7 @@
 				</li>
 				
 				<li class="has-children comments">
-					<a href="#0">인기</a>
+					<a href="CatTubeServlet?command=board_popular">인기</a>
 					<!-- <ul>
 						<li><a href="#0">All Comments</a></li>
 						<li><a href="#0">Edit Comment</a></li>
@@ -152,8 +158,8 @@
 			<div style="width:100%; line-height:40px; background-color: #FFFFFF">
 				<a href="CatTubeServlet?command=board_list">홈</a>
 				&nbsp;&nbsp;&nbsp;&nbsp;
-				<a>인기</a>
-			</div>			
+				<a href="CatTubeServlet?command=board_popular">인기</a>
+			</div>
 			<br><br>
 			<div style="padding-top:15px; background-color: #FFFFFF">
 				<c:forEach var="board" items="${boardList}">

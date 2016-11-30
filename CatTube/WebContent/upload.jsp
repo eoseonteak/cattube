@@ -82,7 +82,7 @@
 			<ul>
 				<li class="cd-label">Main</li>
 				<li class="has-children overview">
-					<a href="CatTubeServlet?command=board_list">홈</a>
+					<a href="http://localhost:8082/CatTube/CatTubeServlet?command=board_list">홈</a>
 					
 					<!-- <ul>
 						<li><a href="#0">All Data</a></li>
@@ -95,7 +95,9 @@
 					<c:if test="${not empty sessionScope.loginId }">
 						<a href="CatTubeServlet?command=my_channel">내 채널</a>
 					</c:if>
+					
 					<c:if test="${empty sessionScope.loginId }">
+						<a href="CatTubeServlet?command=login_form">내 채널</a>
 					</c:if>
 					
 					<!-- <ul>
@@ -166,41 +168,11 @@
 		</nav>
 		
 		<div class="content-wrapper" align="center"  style="background-color: #EAEAEA">
-		<div>
 		&nbsp;
-		</div>
-		<div style="width:80%; padding-top:15px; background-color: #FFFFFF">
-			<c:forEach var="board" items="${searchList}">
-				<table style="float: center;">
-					<tr>
-						<td rowspan="5">
-							<a href="CatTubeServlet?command=board_read&num=${board.num }"> 
-							<img src="${board.imagePath}" style="vertical-align:top"
-							alt="cat 00 image" width="200" height="128">&nbsp;&nbsp;
-							</a>
-						</td>
-						<td>
-						<a href="CatTubeServlet?command=board_read&num=${board.num }">
-						${board.title}
-						</a><br></td>
-					</tr>
-					<tr>
-						<td>${board.writer}<br></td>
-					</tr>
-					<tr>
-						<td style="font-size:9px; color:gray;">조회수 ${board.readCount} 회<br></td>
-					</tr>
-					<tr>
-						<td style="font-size:9px; color:gray;">${board.writeDate}</td>
-					</tr>
-					<tr>
-						<td id="content" width="450" style="font-size:9px; color:gray;">${board.content}</td>
-					</tr>
-					<tr>
-						<td>&nbsp;</td>
-					</tr>
-				</table>
-			</c:forEach>
+		<div style="width:80%; padding-top:15px; padding-bottom:15px; background-color: #FFFFFF">
+			<h3 style="display:inline; margin-left:15px; float:left;">업로드</h3>
+			<br><br>
+			
 		</div>
 	</div> <!-- .content-wrapper -->
 			</main> <!-- .cd-main-content -->

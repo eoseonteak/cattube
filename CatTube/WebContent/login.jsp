@@ -2,7 +2,7 @@
 <html lang="kr">
 	<head>
 	<meta charset="UTF-8">
-	<title>http://www.blueb.co.kr</title>
+	<title>CatTube</title>
 
 <style rel="stylesheet">
 html {
@@ -303,8 +303,7 @@ body {
   <div class="form-toggle"></div>
   <div class="form-panel one">
     <div class="form-header">
-      <img src="img/cat_2.gif" width="450" height="100">
-      <h1>Account Login</h1>
+    <img src="img/cat_2.gif" width="450" height="100">
     </div>
     <div class="form-content">
       <form action="CatTubeServlet" method="post">

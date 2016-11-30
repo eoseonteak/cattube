@@ -2,13 +2,16 @@ package controller;
 
 import controller.action.Action;
 import controller.action.BoardListAction;
+import controller.action.BoardPopularAction;
 import controller.action.BoardReadAction;
 import controller.action.BoardReplyAction;
 import controller.action.BoardSearchAction;
+import controller.action.BoardUploadAction;
 import controller.action.LoginFormAction;
 import controller.action.MemberLoginAction;
 import controller.action.MemberLogoutAction;
 import controller.action.MyChannelAction;
+import controller.action.ReplyDeleteAction;
 
 public class ActionFactory {
 	private ActionFactory() {}
@@ -36,8 +39,13 @@ public class ActionFactory {
 			action = new MyChannelAction();
 		}else if(command.equals("board_reply")){
 			action = new BoardReplyAction();
+		}else if(command.equals("reply_delete")){
+			action = new ReplyDeleteAction();
+		}else if(command.equals("board_popular")){
+			action = new BoardPopularAction();
+		}else if(command.equals("board_upload")){
+			action = new BoardUploadAction();
 		}
-		
 		return action;
 	}
 	

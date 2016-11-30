@@ -166,11 +166,16 @@
 		</nav>
 		
 		<div class="content-wrapper" align="center"  style="background-color: #EAEAEA">
+			<div style="width:100%; line-height:40px; background-color: #FFFFFF">
+				<a href="CatTubeServlet?command=board_list">»®</a>
+				&nbsp;&nbsp;&nbsp;&nbsp;
+				<a href="CatTubeServlet?command=board_popular">¿Œ±‚</a>
+			</div>
 		<div>
 		&nbsp;
 		</div>
 		<div style="width:80%; padding-top:15px; background-color: #FFFFFF">
-			<c:forEach var="board" items="${searchList}">
+			<c:forEach var="board" items="${popularList}">
 				<table style="float: center;">
 					<tr>
 						<td rowspan="5">

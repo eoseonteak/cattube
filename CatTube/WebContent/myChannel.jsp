@@ -57,7 +57,13 @@
 
 		<nav class="cd-nav">
 			<ul class="cd-top-nav">
-				<li><a href="#0">업로드</a></li>
+				<c:if test="${empty sessionScope.loginId }">
+				<li><a href="CatTubeServlet?command=login_form">업로드</a></li>
+				</c:if>
+				<c:if test="${not empty sessionScope.loginId }">
+				<li><a href="CatTubeServlet?command=board_upload">업로드</a></li>
+				</c:if>
+				
 				<li style="margin-right:15px;">
 					<c:if test="${not empty sessionScope.loginId }">
 						<a href="CatTubeServlet?command=member_logout">로그아웃</a>
@@ -164,7 +170,7 @@
 		<div class="content-wrapper" align="center"  style="background-color: #EAEAEA">
 		<div style="width:80%; line-height:40px; background-color: #FFFFFF">
 			<c:if test="${not empty sessionScope.loginId }">
-				${sessionScope.loginId } 님<br>
+				${sessionScope.loginId } 님의 채널<br>
 			</c:if>	
 		</div>
 		&nbsp;

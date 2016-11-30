@@ -24,7 +24,7 @@
 		    }
 		    var form = document.form2;
 
-		    form.action="BoardServlet";
+		    form.action="CatTubeServlet";
 		    form.reno.value=reno;
 		    form.submit();
 		}
@@ -36,6 +36,7 @@
 			var form = document.form2;
 			form.reno.value=reno;
 		}
+		
 	</script>
     
 	<title>CatTube</title>
@@ -69,7 +70,13 @@
 
 		<nav class="cd-nav">
 			<ul class="cd-top-nav">
-				<li><a href="#0">업로드</a></li>
+				<c:if test="${empty sessionScope.loginId }">
+				<li><a href="CatTubeServlet?command=login_form">업로드</a></li>
+				</c:if>
+				<c:if test="${not empty sessionScope.loginId }">
+				<li><a href="CatTubeServlet?command=board_upload">업로드</a></li>
+				</c:if>
+				
 				<li style="margin-right:15px;">
 					<c:if test="${not empty sessionScope.loginId }">
 						<a href="CatTubeServlet?command=member_logout">로그아웃</a>
@@ -100,9 +107,7 @@
 					<c:if test="${not empty sessionScope.loginId }">
 						<a href="CatTubeServlet?command=my_channel">내 채널</a>
 					</c:if>
-					
 					<c:if test="${empty sessionScope.loginId }">
-						<a href="CatTubeServlet?command=login_form">내 채널</a>
 					</c:if>
 					<!-- <ul>
 						<li><a href="#0">All Comments</a></li>
@@ -233,8 +238,15 @@
 					<input type="hidden" name="articleNum" value="<c:out value="${bvo.num}"/>">
 					작성자 : <input type="text" name="writer" value="<c:out value="${sessionScope.loginId }"/>"
 							style="border:0;" readonly><br>
+					<c:if test="${not empty sessionScope.loginId }">
 					<textarea name="rememo" rows="4" cols="50" maxlength="100" placeholder="댓글 입력"></textarea>
 					<input type="submit" value="쓰기">
+					</c:if>
+					
+					<c:if test="${empty sessionScope.loginId }">
+					<textarea name="rememo" rows="4" cols="50" maxlength="100" placeholder="댓글 입력" disabled></textarea>
+					<input type="button" value="쓰기" onclick="">
+					</c:if>
 				</form>
 			
 			
@@ -259,7 +271,21 @@
 			</c:forEach>
 			</div>
 		</div>
-
+		
+		<div id="replyDiv" style="border:1px solid; width:300px; display:none">
+	    <form name="form2" action="CatTubeServlet" method="post">
+	    	<input type="hidden" name="command" value="reply_delete">
+	    	<input type="hidden" name="command" value="reply_update">
+	        <input type="hidden" name="articleNum" value="<c:out value="${bvo.num}"/>">
+	        <input type="hidden" name="reno">
+	        <div id="text">
+	        <textarea name="rememo" rows="3" cols="30" maxlength="500"></textarea>
+	        <a href="#" onclick="fn_replyUpdateSave()">저장</a>
+	        <a href="#" onclick="fn_replyUpdateCancel()">취소</a>
+	        </div>
+	    </form>
+		</div>
+		
 		<!--리스트  -->		
 		<div
 			style="height: auto; display:inline-block; margin-left:15px; margin-top:15px; background-color: #FFFFFF">
@@ -291,6 +317,8 @@
 				</tr>
 			</table>
 		</div>
+		
+		
 	</div> <!-- .content-wrapper -->
 			</main> <!-- .cd-main-content -->
 <script src="js/jquery-2.1.4.js"></script>
