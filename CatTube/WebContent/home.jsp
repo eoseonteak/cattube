@@ -50,12 +50,22 @@
 		<nav class="cd-nav">
 			<ul class="cd-top-nav">
 				<c:if test="${empty sessionScope.loginId }">
-				<li><a href="CatTubeServlet?command=login_form">업로드</a></li>
+					<li><a href="CatTubeServlet?command=login_form">업로드</a></li>
 				</c:if>
 				<c:if test="${not empty sessionScope.loginId }">
-				<li><a href="CatTubeServlet?command=board_upload">업로드</a></li>
+					<li><a href="CatTubeServlet?command=board_upload">업로드</a></li>
 				</c:if>
 				
+				<li style="margin-right:5px;">
+					<c:choose>
+					<c:when test="${empty sessionScope.nickname}">
+						<a href="login.do?command=authorize">네이버 로그인</a>
+					</c:when>
+					<c:otherwise>
+						<a href="login.do?command=logout">네이버 로그아웃</a>
+					</c:otherwise>
+					</c:choose>
+				</li>
 				<li style="margin-right:15px;">
 					<c:if test="${not empty sessionScope.loginId }">
 						<a href="CatTubeServlet?command=member_logout">로그아웃</a>
@@ -64,6 +74,9 @@
 						<a href="CatTubeServlet?command=login_form">로그인</a>
 					</c:if>
 				</li>
+				
+				
+				
 			</ul>
 		</nav>
 		
