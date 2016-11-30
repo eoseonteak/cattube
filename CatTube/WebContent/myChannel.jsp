@@ -93,7 +93,7 @@
 			<ul>
 				<li class="cd-label">Main</li>
 				<li class="has-children overview">
-					<a href="http://localhost:8082/CatTube/CatTubeServlet?command=board_list">홈</a>
+					<a href="CatTubeServlet?command=board_list">홈</a>
 					
 					<!-- <ul>
 						<li><a href="#0">All Data</a></li>
@@ -103,13 +103,14 @@
 				</li>
 				
 				<li class="has-children users">
-					<c:if test="${not empty sessionScope.loginId }">
-						<a href="CatTubeServlet?command=my_channel">내 채널</a>
-					</c:if>
-					
-					<c:if test="${empty sessionScope.loginId }">
-						<a href="CatTubeServlet?command=login_form">내 채널</a>
-					</c:if>
+					<c:choose>
+						<c:when test="${empty sessionScope.loginId && empty sessionScope.nickname}">
+							<a href="CatTubeServlet?command=login_form">내 채널</a>
+						</c:when>
+						<c:otherwise>
+							<a href="CatTubeServlet?command=my_channel">내 채널</a>
+						</c:otherwise>
+					</c:choose>
 					
 					<!-- <ul>
 						<li><a href="#0">All Comments</a></li>
@@ -119,7 +120,7 @@
 				</li>
 				
 				<li class="has-children comments">
-					<a href="#0">인기</a>
+					<a href="CatTubeServlet?command=board_popular">인기</a>
 					
 					<!-- <ul>
 						<li><a href="#0">All Comments</a></li>
@@ -182,6 +183,9 @@
 		<div style="width:80%; line-height:40px; background-color: #FFFFFF">
 			<c:if test="${not empty sessionScope.loginId }">
 				${sessionScope.loginId } 님의 채널<br>
+			</c:if>
+			<c:if test="${not empty sessionScope.nickname }">
+				${sessionScope.nickname} 님의 채널<br>
 			</c:if>	
 		</div>
 		&nbsp;
@@ -192,6 +196,31 @@
 			<c:forEach var="board" items="${boardList}">
 			<c:choose>
 				<c:when test="${sessionScope.loginId eq board.writer}">
+				<table style="display:inline;">
+				<tr>
+					<td colspan="2">
+					<a href="CatTubeServlet?command=board_read&num=${board.num}">
+					<img src="${board.imagePath}" 
+					alt="cat 00 image" width="200" height="110"></a>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+					<a href="CatTubeServlet?command=board_read&num=${board.num}">
+					${board.title}</a>
+					</td>
+				</tr>
+				<tr>
+					<td style="font-size:9px; color:gray;">조회수 ${board.readCount} 회&nbsp;&nbsp;&nbsp;&nbsp;</td>
+					<td style="font-size:9px; color:gray;">${board.writeDate}</td>
+				</tr>
+				<tr>
+					<td>&nbsp;</td>
+				</tr>
+				</table>
+				</c:when>
+				
+				<c:when test="${sessionScope.nickname eq board.writer}">
 				<table style="display:inline;">
 				<tr>
 					<td colspan="2">

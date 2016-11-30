@@ -97,11 +97,14 @@
 				
 				
 				<li class="has-children users">
-					<c:if test="${not empty sessionScope.loginId }">
-						<a href="CatTubeServlet?command=my_channel">내 채널</a>
-					</c:if>
-					<c:if test="${empty sessionScope.loginId }">
-					</c:if>
+					<c:choose>
+						<c:when test="${empty sessionScope.loginId && empty sessionScope.nickname }">
+						
+						</c:when>
+						<c:otherwise>
+							<a href="CatTubeServlet?command=my_channel">내 채널</a>
+						</c:otherwise>
+					</c:choose>
 					<!-- <ul>
 						<li><a href="#0">All Comments</a></li>
 						<li><a href="#0">Edit Comment</a></li>
