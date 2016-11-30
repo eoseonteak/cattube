@@ -16,7 +16,7 @@ public class BoardListAction implements Action{
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String url = "/index.jsp";
+		String url = "/home.jsp";
 		
 		BoardDAO dao = BoardDAO.getInstance();
 		List<BoardVO> boardList = dao.selectAll();
