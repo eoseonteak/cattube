@@ -10,16 +10,17 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import resources.ClientSecrets;
+
 public class LogoutAction implements Action{
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-//		String token = (String) request.getAttribute("access_token");;// 네이버 로그인 접근 토큰;
 		String token = (String) request.getSession().getAttribute("access_token");
 		
-		String clientId = "HLClh2N5NgHvfAq8lDOI";//애플리케이션 클라이언트 아이디값";
-	    String clientSecret = "WhNtIn5ggC";//애플리케이션 클라이언트 시크릿값";
+		String clientId = ClientSecrets.CLIENT_ID;
+	    String clientSecret = ClientSecrets.CLIENT_SECRET;
 
 	    String apiURL;
 	    apiURL = "https://nid.naver.com/oauth2.0/token?grant_type=delete&";
@@ -29,13 +30,7 @@ public class LogoutAction implements Action{
 	    apiURL += "&service_provider=NAVER";
 	    
 	    System.out.println("apiURL : " + apiURL);
-	    
-//	    request.setAttribute("logout", apiURL);
-//	    
-//	    request.getSession().setMaxInactiveInterval(0);
-//	    request.getSession().invalidate();
-//	    request.getRequestDispatcher("/board/logout.jsp").forward(request, response);
-	    
+    
 	    try {
 			URL url = new URL(apiURL);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();

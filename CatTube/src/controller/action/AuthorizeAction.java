@@ -10,11 +10,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import resources.ClientSecrets;
+
 public class AuthorizeAction implements Action{
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	    String clientId = "HLClh2N5NgHvfAq8lDOI";//애플리케이션 클라이언트 아이디값";
+	    String clientId = ClientSecrets.CLIENT_ID;
 	    String redirectURI = URLEncoder.encode("http://70.12.109.95:8280/CatTube/login.do?command=callback", "UTF-8");
 	    SecureRandom random = new SecureRandom();
 	    String state = new BigInteger(130, random).toString();

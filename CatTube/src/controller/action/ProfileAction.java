@@ -19,8 +19,6 @@ public class ProfileAction implements Action{
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-	    //String token = (String) request.getAttribute("access_token");;// 네이버 로그인 접근 토큰;
 		HttpSession session = request.getSession();
 		String token = (String) session.getAttribute("access_token");
 		

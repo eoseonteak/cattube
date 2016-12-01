@@ -15,6 +15,8 @@ import javax.servlet.http.HttpSession;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import resources.ClientSecrets;
+
 public class CallbackAction implements Action{
 	
 	@Override
@@ -25,8 +27,8 @@ public class CallbackAction implements Action{
 		System.out.println("code : " + code);
 		System.out.println("state : " + state);
 		
-		String clientId = "HLClh2N5NgHvfAq8lDOI";//애플리케이션 클라이언트 아이디값";
-	    String clientSecret = "WhNtIn5ggC";//애플리케이션 클라이언트 시크릿값";
+		String clientId = ClientSecrets.CLIENT_ID;
+	    String clientSecret = ClientSecrets.CLIENT_SECRET;
 
 	    String redirectURI = URLEncoder.encode("http://70.12.109.95:8280/CatTube/login.do?command=callback", "UTF-8");
 	    String apiURL;
@@ -73,8 +75,6 @@ public class CallbackAction implements Action{
 				System.out.println(refresh_token);
 				System.out.println(token_type);
 				System.out.println(expires_in);
-				
-				//request.setAttribute("access_token", access_token);
 				
 				HttpSession session = request.getSession();
 				session.setAttribute("access_token", access_token);
