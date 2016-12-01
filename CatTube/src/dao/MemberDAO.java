@@ -1,7 +1,8 @@
 package dao;
  
 import java.sql.*;
- 
+
+import util.Macro;
 import vo.MemberVO;
  
 public class MemberDAO {
@@ -18,7 +19,11 @@ public class MemberDAO {
         PreparedStatement pstmt = null;
         int result = 0;
         try {
-            con = DBHelper.makeConnection();
+        	if(Macro.DB_CONNECTION_POOL){
+        		con = DBManager.getConnection();
+        	} else {
+        		con = DBHelper.makeConnection();
+        	}
             String sql = "INSERT INTO MEMBER"
                     + "(ID,PASSWORD,NAME,EMAIL) VALUES(?,?,?,?)";
             pstmt = con.prepareStatement(sql);
@@ -32,8 +37,12 @@ public class MemberDAO {
             System.out.println("insert member 에러");
             e.printStackTrace();
         } finally{
-            DBHelper.close(pstmt);
-            DBHelper.close(con);
+        	if(Macro.DB_CONNECTION_POOL){
+        		DBManager.close(con, pstmt);
+        	} else {
+        		DBHelper.close(pstmt);
+        		DBHelper.close(con);
+        	}
         }
         return result;
     }
@@ -44,7 +53,11 @@ public class MemberDAO {
         ResultSet rs = null;
         MemberVO result = null;
         try {
-            con = DBHelper.makeConnection();
+        	if(Macro.DB_CONNECTION_POOL){
+        		con = DBManager.getConnection();
+        	} else {
+        		con = DBHelper.makeConnection();
+        	}
             String sql = "SELECT ID,PASSWORD,NAME,EMAIL "
                     + "FROM MEMBER WHERE ID=?";
             pstmt = con.prepareStatement(sql);
@@ -62,9 +75,13 @@ public class MemberDAO {
             System.out.println("select member 에러");
             e.printStackTrace();
         } finally{
-        	DBHelper.close(rs);
-        	DBHelper.close(pstmt);
-        	DBHelper.close(con);
+        	if(Macro.DB_CONNECTION_POOL){
+        		DBManager.close(con, pstmt, rs);
+        	} else {
+	        	DBHelper.close(rs);
+	        	DBHelper.close(pstmt);
+	        	DBHelper.close(con);
+        	}
         }
         return result;
     }   

@@ -4,10 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import util.Macro;
 import vo.BoardVO;
 
 public class BoardDAO {
@@ -29,7 +29,11 @@ public class BoardDAO {
 		try {
 			String sql = "SELECT * FROM CATTUBE_BOARD ORDER BY NUM DESC";
 			
-			conn = DBHelper.makeConnection();
+			if(Macro.DB_CONNECTION_POOL){
+				conn = DBManager.getConnection();
+			} else {
+				conn = DBHelper.makeConnection();
+			}
 			pstmt = conn.prepareStatement(sql);
 						
 			rs = pstmt.executeQuery();
@@ -54,9 +58,13 @@ public class BoardDAO {
 			System.out.println("selectAll error");
 			e.printStackTrace();
 		} finally {
-			DBHelper.close(conn);
-			DBHelper.close(pstmt);
-			DBHelper.close(rs);
+			if(Macro.DB_CONNECTION_POOL){
+				DBManager.close(conn, pstmt, rs);
+			} else {
+				DBHelper.close(conn);
+				DBHelper.close(pstmt);
+				DBHelper.close(rs);
+			}
 		}
 		return list;
 	}
@@ -69,8 +77,11 @@ public class BoardDAO {
 
 		try {
 			String sql = "SELECT * FROM CATTUBE_BOARD ORDER BY READCOUNT DESC";
-			
-			conn = DBHelper.makeConnection();
+			if(Macro.DB_CONNECTION_POOL){
+				conn = DBManager.getConnection();
+			} else {
+				conn = DBHelper.makeConnection();
+			}
 			pstmt = conn.prepareStatement(sql);
 						
 			rs = pstmt.executeQuery();
@@ -95,9 +106,13 @@ public class BoardDAO {
 			System.out.println("selectAll error");
 			e.printStackTrace();
 		} finally {
-			DBHelper.close(conn);
-			DBHelper.close(pstmt);
-			DBHelper.close(rs);
+			if(Macro.DB_CONNECTION_POOL){
+				DBManager.close(conn, pstmt, rs);
+			} else {
+				DBHelper.close(conn);
+				DBHelper.close(pstmt);
+				DBHelper.close(rs);
+			}
 		}
 		return list;
 	}
@@ -113,7 +128,11 @@ public class BoardDAO {
 		List<BoardVO> list = new ArrayList<BoardVO>();
 
 		try {
-			conn = DBHelper.makeConnection();
+			if(Macro.DB_CONNECTION_POOL){
+				conn = DBManager.getConnection();
+			} else {
+				conn = DBHelper.makeConnection();
+			}
 			pstmt = conn.prepareStatement(sql);
 
 			//pstmt.setString(1, data);
@@ -138,9 +157,13 @@ public class BoardDAO {
 			System.out.println("selectData error");
 			e.printStackTrace();
 		} finally {
-			DBHelper.close(conn);
-			DBHelper.close(pstmt);
-			DBHelper.close(rs);
+			if(Macro.DB_CONNECTION_POOL){
+				DBManager.close(conn, pstmt, rs);
+			} else {
+				DBHelper.close(conn);
+				DBHelper.close(pstmt);
+				DBHelper.close(rs);
+			}
 		}
 		return list;
 	}
@@ -152,7 +175,11 @@ public class BoardDAO {
         BoardVO bvo = null;
          
         try {
-            con = DBHelper.makeConnection();
+			if(Macro.DB_CONNECTION_POOL){
+				con = DBManager.getConnection();
+			} else {
+				con = DBHelper.makeConnection();
+			}
             String sql = 
                 "SELECT * FROM CATTUBE_BOARD WHERE NUM=?";
             pstmt = con.prepareStatement(sql);
@@ -176,9 +203,13 @@ public class BoardDAO {
             System.out.println("selectNum 에러");
             e.printStackTrace();
         } finally{
-            DBHelper.close(rs);
-            DBHelper.close(pstmt);
-            DBHelper.close(con);
+        	if(Macro.DB_CONNECTION_POOL){
+        		DBManager.close(con, pstmt, rs);
+        	} else {
+				DBHelper.close(rs);
+				DBHelper.close(pstmt);
+				DBHelper.close(con);
+        	}
         }
         return bvo;
     }
@@ -211,7 +242,11 @@ public class BoardDAO {
 		int result = 0;
 
 		try {
-			conn = DBHelper.makeConnection();
+			if(Macro.DB_CONNECTION_POOL){
+				conn = DBManager.getConnection();
+			} else {
+				conn = DBHelper.makeConnection();
+			}
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setInt(1, articleId);
@@ -221,8 +256,12 @@ public class BoardDAO {
 			System.out.println("updateReadCount error");
 			e.printStackTrace();
 		} finally {
-			DBHelper.close(conn);
-			DBHelper.close(pstmt);
+			if(Macro.DB_CONNECTION_POOL){
+				DBManager.close(conn, pstmt);
+			} else {
+				DBHelper.close(conn);
+				DBHelper.close(pstmt);
+			}
 		}
 		return result;
 	}
