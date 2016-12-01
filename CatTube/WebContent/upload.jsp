@@ -9,6 +9,50 @@
 	<link rel="icon" href="img/favicon.ico" type="image/x-icon">
 	<link rel="stylesheet" href="css/reset.css"> <!-- CSS reset -->
 	<link rel="stylesheet" href="css/style.css"> <!-- Resource style -->
+	
+<style type="text/css">
+.filebox label {
+  display: inline-block;
+  padding: .5em .75em;
+  color: #999;
+  font-size: inherit;
+  line-height: normal;
+  vertical-align: middle;
+  background-color: #fdfdfd;
+  cursor: pointer;
+  border: 1px solid #ebebeb;
+  border-bottom-color: #e2e2e2;
+  border-radius: .25em;
+}
+
+.filebox input[type="file"] {  /* 파일 필드 숨기기 */
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip:rect(0,0,0,0);
+  border: 0;
+}
+/* named upload */
+.filebox .upload-name {
+  display: inline-block;
+  padding: .5em .75em;  /* label의 패딩값과 일치 */
+  font-size: inherit;
+  font-family: inherit;
+  line-height: normal;
+  vertical-align: middle;
+  background-color: #f5f5f5;
+  border: 1px solid #ebebeb;
+  border-bottom-color: #e2e2e2;
+  border-radius: .25em;
+  -webkit-appearance: none; /* 네이티브 외형 감추기 */
+  -moz-appearance: none;
+  appearance: none;
+  }
+</style>
+
 	<script src="js/modernizr.js"></script> <!-- Modernizr -->
 	<script src="js/jquery-3.1.1.min.js"></script>
 	
@@ -20,14 +64,26 @@
 			}
 		}
 		
-		$(function(){
-			$(document).on('click','#content',function(){
-				if($('#content').text().length>5){
-					var str = $(this).text().substring(0,5);
-					$(this).text(str+"...");
-				}
-			})
-		})
+		$(document).ready(function(){
+			  var fileTarget = $('.filebox .upload-hidden');
+
+			  fileTarget.on('change', function(){  // 값이 변경되면
+			    if(window.FileReader){  // modern browser
+			      var filename = $(this)[0].files[0].name;
+			    } 
+			    else {  // old IE
+			      var filename = $(this).val().split('/').pop().split('\\').pop();  // 파일명만 추출
+			    }
+			    
+			    // 추출한 파일명 삽입
+			    $(this).siblings('.upload-name').val(filename);
+			    var form = document.frm;
+			    
+			    form.action="CatTubeServlet";
+			    form.submit();
+			  });
+			}); 
+		
 		
 	</script>
     
@@ -171,25 +227,25 @@
 		&nbsp;
 		<div style="width:80%; padding-top:15px; padding-bottom:15px; background-color: #FFFFFF">
 			<br><br>
-			<!-- <img src="img/tap(2).png" width="20%" 
-			onmouseover="this.src='img/tap(1).png'"
-			onmouseout="this.src='img/tap(2).png'"/><br><br>
-			 -->
+						
+			<div class="filebox">
+			<form name="frm" enctype="multipart/form-data">
+				<input type="hidden" name="command" value="upload_data">
+				<input type="hidden" class="upload-name" name="fileUpload" value="파일선택" disabled="disabled">
+					
+				<label for="ex_filename">
+				<img src="img/tap(2).png" 
+					onmouseover="this.src='img/tap(1).png'"
+					onmouseout="this.src='img/tap(2).png'">
+				</label>
+				<input type="file" id="ex_filename" class="upload-hidden" accept="video/*">
+			</form>
+			</div>
 			
-			
-			<span id="fileInputForm" style="position:relative; float:left; 
-			width:100px; height:50px; overflow:hidden; cursor:pointer; 
-			background-image:url('img/tap(1).png');">
-			<input type="file" id="filename" name="filename" 
-			value="" style='position：absolute; margin-left:-10px; width:62px; height:18px; 
-			filter:alpha(opacity=0); opacity:0; -moz-opacity:0; cursor:pointer;' onChange="fileUpload()">
-			</span>
-			
+			<br><br>
 			<font size="5">업로드할 파일을 선택</font>
 			<div>&nbsp;</div>
 			<p>또는 동영상 파일을 드래그 앤 드롭</p>
-			
-			
 		
 		</div>
 	</div> <!-- .content-wrapper -->

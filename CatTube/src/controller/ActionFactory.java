@@ -12,6 +12,7 @@ import controller.action.MemberLoginAction;
 import controller.action.MemberLogoutAction;
 import controller.action.MyChannelAction;
 import controller.action.ReplyDeleteAction;
+import controller.action.UploadDataAction;
 
 public class ActionFactory {
 	private ActionFactory() {}
@@ -45,6 +46,8 @@ public class ActionFactory {
 			action = new BoardPopularAction();
 		}else if(command.equals("board_upload")){
 			action = new BoardUploadAction();
+		}else if(command.equals("upload_data")){
+			action = new UploadDataAction();
 		}
 		return action;
 	}
