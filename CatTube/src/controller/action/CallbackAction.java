@@ -16,6 +16,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import resources.ClientSecrets;
+import resources.LocalServer;
 
 public class CallbackAction implements Action{
 	
@@ -30,7 +31,7 @@ public class CallbackAction implements Action{
 		String clientId = ClientSecrets.CLIENT_ID;
 	    String clientSecret = ClientSecrets.CLIENT_SECRET;
 
-	    String redirectURI = URLEncoder.encode("http://70.12.109.95:8280/CatTube/login.do?command=callback", "UTF-8");
+	    String redirectURI = URLEncoder.encode(LocalServer.LOCAL_SERVER + "/CatTube/login.do?command=callback", "UTF-8");
 	    String apiURL;
 	    apiURL = "https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&";
 	    apiURL += "client_id=" + clientId;

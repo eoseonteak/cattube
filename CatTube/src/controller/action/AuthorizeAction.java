@@ -11,13 +11,14 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import resources.ClientSecrets;
+import resources.LocalServer;
 
 public class AuthorizeAction implements Action{
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    String clientId = ClientSecrets.CLIENT_ID;
-	    String redirectURI = URLEncoder.encode("http://70.12.109.95:8280/CatTube/login.do?command=callback", "UTF-8");
+	    String redirectURI = URLEncoder.encode(LocalServer.LOCAL_SERVER + "/CatTube/login.do?command=callback", "UTF-8");
 	    SecureRandom random = new SecureRandom();
 	    String state = new BigInteger(130, random).toString();
 	    String apiURL = "https://nid.naver.com/oauth2.0/authorize?response_type=code";
