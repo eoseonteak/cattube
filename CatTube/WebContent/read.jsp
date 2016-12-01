@@ -189,7 +189,7 @@
 			</ul> -->
 		</nav>
 		
-		<div class="content-wrapper" style="background-color: #EAEAEA">
+		<div class="content-wrapper" style="background-color: #EAEAEA; height:1000;">
 		<div style="width:70%; height:auto; float: left; background-color: #EAEAEA">
 			<div style="margin-top:15px;">
 				<iframe src="${bvo.videoPath}" height="360" width="100%">
@@ -302,34 +302,37 @@
 		</div>
 		
 		<!--리스트  -->		
-		<div
-			style="height: auto; display:inline-block; margin-left:15px; margin-top:15px; background-color: #FFFFFF">
+		<div style="height: auto; display:inline-block;
+		margin-left:15px; margin-top:15px; background-color: #FFFFFF">
 			<table>
+				<c:forEach var="board" items="${boardList}">
+				<c:choose>
+				 <c:when test="${board.writer eq bvo.writer}">
 				<tr>
-					<td><iframe src="http://www.youtube.com/embed/bEknnqRsLYI"
-							height="200" width="200"></iframe> <br>올린사람<br> 조회수
-						9999회<br></td>
+					<td>
+						<a href="CatTubeServlet?command=board_read&num=${board.num}">
+						<img src="${board.imagePath}" width="200" height="128"></a>
+					</td>
 				</tr>
 				<tr>
-					<td><iframe src="http://www.youtube.com/embed/bEknnqRsLYI"
-							height="200" width="200"></iframe> <br>올린사람<br> 조회수
-						9999회<br></td>
+					<td><a href="CatTubeServlet?command=board_read&num=${board.num}">
+					${board.title}</a>
+					</td>
 				</tr>
 				<tr>
-					<td><iframe src="http://www.youtube.com/embed/bEknnqRsLYI"
-							height="200" width="200"></iframe> <br>올린사람<br> 조회수
-						9999회<br></td>
+					<td style="font-size:9px; color:gray;">
+						${board.writer} 
+					</td>
 				</tr>
 				<tr>
-					<td><iframe src="http://www.youtube.com/embed/bEknnqRsLYI"
-							height="200" width="200"></iframe> <br>올린사람<br> 조회수
-						9999회<br></td>
+					<td style="font-size:9px; color:gray;">
+						조회수 ${board.readCount} 회 
+					</td>
 				</tr>
-				<tr>
-					<td><iframe src="http://www.youtube.com/embed/bEknnqRsLYI"
-							height="200" width="200"></iframe> <br>올린사람<br> 조회수
-						9999회<br></td>
-				</tr>
+				<tr><td>&nbsp;</td></tr>
+				</c:when>
+				</c:choose>
+				</c:forEach>
 			</table>
 		</div>
 		

@@ -1,8 +1,8 @@
 package resources;
 
 public final class ClientSecrets {
-	public static final String CLIENT_ID = "YOUR_CLIENT_ID";
-	public static final String CLIENT_SECRET = "YOUR_CLIENT_SECRET";
+	public static final String CLIENT_ID = "Ax9KUtaVKf4UorvEhlIF";
+	public static final String CLIENT_SECRET = "fbYcqF70hW";
 }
 
 	  

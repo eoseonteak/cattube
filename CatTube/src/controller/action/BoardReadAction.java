@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dao.BoardDAO;
 import dao.ReplyDAO;
 import service.CatTubeService;
 import vo.BoardVO;
@@ -21,7 +22,8 @@ public class BoardReadAction implements Action{
 		String url = "/read.jsp";
 		
 		CatTubeService service = CatTubeService.getInstance();
-		ReplyDAO dao = ReplyDAO.getInstance();
+		ReplyDAO rdao = ReplyDAO.getInstance();
+		BoardDAO bdao = BoardDAO.getInstance();
 		
 		String articleNumStr = request.getParameter("num");
 		int articleNum = 0;
@@ -31,10 +33,13 @@ public class BoardReadAction implements Action{
         }
 		
 		BoardVO bvo = service.read(articleNum);
-		List<ReplyVO> replyList = dao.selectBoardReply();
+		List<ReplyVO> replyList = rdao.selectBoardReply();
 		
 		request.setAttribute("bvo", bvo);
 		request.setAttribute("replyList", replyList);
+		
+		List<BoardVO> boardList = bdao.selectAll();
+		request.setAttribute("boardList", boardList);
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);

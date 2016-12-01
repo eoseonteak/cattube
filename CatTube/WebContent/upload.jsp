@@ -170,9 +170,27 @@
 		<div class="content-wrapper" align="center"  style="background-color: #EAEAEA">
 		&nbsp;
 		<div style="width:80%; padding-top:15px; padding-bottom:15px; background-color: #FFFFFF">
-			<h3 style="display:inline; margin-left:15px; float:left;">업로드</h3>
 			<br><br>
+			<!-- <img src="img/tap(2).png" width="20%" 
+			onmouseover="this.src='img/tap(1).png'"
+			onmouseout="this.src='img/tap(2).png'"/><br><br>
+			 -->
 			
+			
+			<span id="fileInputForm" style="position:relative; float:left; 
+			width:100px; height:50px; overflow:hidden; cursor:pointer; 
+			background-image:url('img/tap(1).png');">
+			<input type="file" id="filename" name="filename" 
+			value="" style='position：absolute; margin-left:-10px; width:62px; height:18px; 
+			filter:alpha(opacity=0); opacity:0; -moz-opacity:0; cursor:pointer;' onChange="fileUpload()">
+			</span>
+			
+			<font size="5">업로드할 파일을 선택</font>
+			<div>&nbsp;</div>
+			<p>또는 동영상 파일을 드래그 앤 드롭</p>
+			
+			
+		
 		</div>
 	</div> <!-- .content-wrapper -->
 			</main> <!-- .cd-main-content -->
