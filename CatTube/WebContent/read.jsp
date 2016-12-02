@@ -250,8 +250,17 @@
 				<form name="form1" action="CatTubeServlet" method="post">
 					<input type="hidden" name="command" value="board_reply"/>
 					<input type="hidden" name="articleNum" value="<c:out value="${bvo.num}"/>">
-					작성자 : <input type="text" name="writer" value="<c:out value="${sessionScope.loginId }"/>"
+					
+					<c:choose>
+						<c:when test="${not empty sessionScope.loginId}">
+						작성자 : <input type="text" name="writer" value="<c:out value="${sessionScope.loginId}"/>"
 							style="border:0;" readonly><br>
+						</c:when>
+						<c:when test="${not empty sessionScope.nickname}">
+						작성자 : <input type="text" name="writer" value="<c:out value="${sessionScope.nickname}"/>"
+							style="border:0;" readonly><br>
+						</c:when>
+					</c:choose>
 					
 					<c:choose>
 						<c:when test="${empty sessionScope.loginId && empty sessionScope.nickname}">
@@ -273,7 +282,11 @@
 					<br>
 					<c:out value="${reply.reWriter}"/> <c:out value="${reply.reDate}"/>
 					<c:if test="${sessionScope.loginId eq reply.reWriter}">
-						<a href="#" id="update" onclick="fn_replyUpdate('<c:out value="${reply.reNo}"/>')">수정</a>
+<%-- 						<a href="#" id="update" onclick="fn_replyUpdate('<c:out value="${reply.reNo}"/>')">수정</a> --%>
+						<a href="#" onclick="fn_replyDelete('<c:out value="${reply.reNo}"/>')">삭제</a>
+					</c:if>
+					<c:if test="${sessionScope.nickname eq reply.reWriter}">
+<%-- 						<a href="#" id="update" onclick="fn_replyUpdate('<c:out value="${reply.reNo}"/>')">수정</a> --%>
 						<a href="#" onclick="fn_replyDelete('<c:out value="${reply.reNo}"/>')">삭제</a>
 					</c:if>
 						<div id="reply<c:out value="${reply.reNo}"/>">
