@@ -119,7 +119,16 @@
 				<c:if test="${not empty sessionScope.loginId }">
 				<li><a href="CatTubeServlet?command=board_upload">업로드</a></li>
 				</c:if>
-				
+				<li style="margin-right:5px;">
+					<c:choose>
+					<c:when test="${empty sessionScope.nickname}">
+						<a href="login.do?command=authorize">네이버 로그인</a>
+					</c:when>
+					<c:otherwise>
+						<a href="login.do?command=logout">네이버 로그아웃</a>
+					</c:otherwise>
+					</c:choose>
+				</li>
 				<li style="margin-right:15px;">
 					<c:if test="${not empty sessionScope.loginId }">
 						<a href="CatTubeServlet?command=member_logout">로그아웃</a>
@@ -229,7 +238,7 @@
 			<br><br>
 						
 			<div class="filebox">
-			<form name="frm" enctype="multipart/form-data">
+			<form name="frm" method="post" enctype="multipart/form-data">
 				<input type="hidden" name="command" value="upload_data">
 				<input type="hidden" class="upload-name" name="fileUpload" value="파일선택" disabled="disabled">
 					
@@ -238,7 +247,7 @@
 					onmouseover="this.src='img/tap(1).png'"
 					onmouseout="this.src='img/tap(2).png'">
 				</label>
-				<input type="file" id="ex_filename" class="upload-hidden" accept="video/*">
+				<input type="file" id="ex_filename" class="upload-hidden" name="fileUpload" accept="video/*">
 			</form>
 			</div>
 			
